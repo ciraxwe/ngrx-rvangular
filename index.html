@@ -1,0 +1,202 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/rvangular.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h2>Introduction to NgRx</h1>
+					<p><small>Emanuelle Gardu&ntilde;o</small></p>
+				</section>
+				<section>
+					<section data-background-color="#dfdfdf">
+						<h2 class="heading--black">NgRx</h2>
+						<p>
+							<img src="https://avatars0.githubusercontent.com/u/16272733?s=250&v=4">
+						</p>
+					</section>
+					<section>
+						<h3>@ngrx - Reactive Extensions for Angular</h3>
+						<p>@ngrx provides a set of clean, well-tested libraries for reactive programming in Angular applications.</p>
+					</section>
+					<section>
+						<h3>@ngrx - Libraries</h3>
+						<dl class="dl--small">
+							<dt>Store</dt>
+							<dd>RxJS powered state management for Angular2 apps, inspired by Redux</dd>
+
+							<dt>Effects</dt>
+							<dd>Side effect model for @ngrx/store</dd>
+
+							<dt>DB</dt>
+							<dd>RxJS powered IndexedDB for Angular applications.</dd>
+
+							<dt>Notify</dt>
+							<dd>RxJS powered web notifications for Angular</dd>
+
+							<dt>Store DevTools</dt>
+							<dd>Developer Tools for @ngrx</dd>
+
+							<dt>Store Log Monitor</dt>
+							<dd>Port of redux-devtools-log-monitor for Angular and @ngrx/store-devtools</dd>
+
+							<dt>Router Store</dt>
+							<dd>Bindings to connect @angular/router to @ngrx/store</dd>
+
+							<dt>Core</dt>
+							<dd>Core functionality for the @ngrx platform</dd>
+						</dl>
+					</section>
+					<section>
+						<h3>Code</h3>
+						<pre><code class="typescript" data-trim data-noescape>@Injectable()
+export class CollectionEffects {
+  @Effect()
+  loadCollection$: Observable<Action> = this.actions$.pipe(
+    ofType(CollectionActionTypes.Load),
+    switchMap(() => this.db
+        .query('books')
+        .pipe(
+          toArray(),
+          map((books: Book[]) => new LoadSuccess(books)),
+          catchError(error => of(new LoadFail(error)))
+        )
+    )
+  );
+}</code></pre>
+					</section>
+				</section>
+				<section>
+					<section data-background-color="#dfdfdf">
+						<h2 class="heading--black">RxJS</h2>
+						<p>
+							<img class="rxjs_logo" src="https://rxjs-dev.firebaseapp.com/generated/images/marketing/home/Rx_Logo-512-512.png" width="230">
+						</p>
+					</section>
+					<section>
+						<h3>RxJS</h3>
+						<p>RxJS is a library for reactive programming using <strong>Observables</strong>, to make it easier to compose asynchronous or callback-based code.</p>
+					</section>
+					<section>
+						<h3>Code</h3>
+						<pre><code class="typescript" data-trim data-noescape>import { Observable, Subject, 
+    ReplaySubject, from, of, range } from 'rxjs';
+import { map, filter, switchMap } from 'rxjs/operators';
+
+range(1, 200)
+  .pipe(filter(x => x % 2 === 1), map(x => x + x))
+  .subscribe(x => console.log(x));</code></pre>
+					</section>
+				</section>
+				<section>
+					<section data-background-color="#dfdfdf">
+						<h2 class="heading--black">Angular</h2>
+						<img src="https://angular.io/assets/images/logos/angular/angular.svg" width="250">
+					</section>
+					<section>
+						<h3>Event Emitter</h3>
+						<pre><code class="typescript" data-trim data-noescape>export class ZippyComponent {
+  visible = true;
+  @Output() open = new EventEmitter<any>();
+  @Output() close = new EventEmitter<any>();
+ 
+  toggle() {
+    this.visible = !this.visible;
+    if (this.visible) {
+      this.open.emit(null);
+    } else {
+      this.close.emit(null);
+    }
+  }
+}</code></pre>
+					</section>
+					<section>
+						<h3>Async Pipe</h3>
+						<pre><code class="typescript" data-trim>@Component({
+  selector: 'async-observable-pipe',
+  template: `<div><code>observable|async</code>:
+       Time: {{ time | async }}</div>`
+})
+export class AsyncObservablePipeComponent {
+  time = new Observable(observer =>
+    setInterval(() => observer.next(new Date().toString()), 1000)
+  );
+}</code></pre>
+					</section>
+					<section>
+						<h3>Router</h3>
+						<pre><code class="typescript" data-trim>export class Routable2Component implements OnInit {
+  constructor(private activatedRoute: ActivatedRoute) {}
+ 
+  ngOnInit() {
+    this.activatedRoute.url
+      .subscribe(url => console.log('The URL changed to: ' + url));
+  }
+}</code></pre>
+					</section>
+					<section>
+						<h3>Forms</h3>
+						<pre><code class="typescript" data-trim>export class MyComponent implements OnInit {
+  nameChangeLog: string[] = [];
+  heroForm: FormGroup;
+ 
+  ngOnInit() {
+    this.logNameChange();
+  }
+
+  logNameChange() {
+    const nameControl = this.heroForm.get('name');
+    nameControl.valueChanges.forEach(
+      (value: string) => this.nameChangeLog.push(value)
+    );
+  }
+}</code></pre>
+					</section>
+				</section>
+				<section>
+					<section data-background-color="#dfdfdf">
+						<h2 class="heading--black">Redux</h2>
+						<img src="https://seeklogo.com/images/R/redux-logo-9CA6836C12-seeklogo.com.png" width="220">
+					</section>
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
