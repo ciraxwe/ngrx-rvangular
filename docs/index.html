@@ -1,118 +1,105 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+    <title>RVAngular</title>
 
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/rvangular.css">
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/rvangular.css">
 
-		<!-- Theme used for syntax highlighting of code -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
 
-		<!-- Printing and PDF exports -->
-		<script>
-			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>
-					<h2>Introduction to NgRx</h1>
-				</section>
-				<section>
-					<section data-background-color="#dfdfdf">
-						<h2 class="heading--black">NgRx</h2>
-						<p>
-							<img src="https://avatars0.githubusercontent.com/u/16272733?s=250&v=4">
-						</p>
-					</section>
-					<section>
-						<h3>@ngrx - Reactive Extensions for Angular</h3>
-						<p>@ngrx provides a set of clean, well-tested libraries for reactive programming in Angular applications.</p>
-					</section>
-					<section>
-						<h3>@ngrx - Libraries</h3>
-						<dl class="dl--small">
-							<dt>Store</dt>
-							<dd>RxJS powered state management for Angular2 apps, inspired by Redux</dd>
-
-							<dt>Effects</dt>
-							<dd>Side effect model for @ngrx/store</dd>
-
-							<dt>DB</dt>
-							<dd>RxJS powered IndexedDB for Angular applications.</dd>
-
-							<dt>Notify</dt>
-							<dd>RxJS powered web notifications for Angular</dd>
-
-							<dt>Store DevTools</dt>
-							<dd>Developer Tools for @ngrx</dd>
-
-							<dt>Store Log Monitor</dt>
-							<dd>Port of redux-devtools-log-monitor for Angular and @ngrx/store-devtools</dd>
-
-							<dt>Router Store</dt>
-							<dd>Bindings to connect @angular/router to @ngrx/store</dd>
-
-							<dt>Core</dt>
-							<dd>Core functionality for the @ngrx platform</dd>
-						</dl>
-					</section>
-					<section>
-						<pre><code class="typescript" data-trim data-noescape>@Injectable()
-export class CollectionEffects {
-  @Effect()
-  loadCollection$: Observable<Action> = this.actions$.pipe(
-    ofType(CollectionActionTypes.Load),
-    switchMap(() => this.db
-        .query('books')
-        .pipe(
-          toArray(),
-          map((books: Book[]) => new LoadSuccess(books)),
-          catchError(error => of(new LoadFail(error)))
-        )
-    )
-  );
-}</code></pre>
-					</section>
-				</section>
-				<section>
-					<section data-background-color="#dfdfdf">
-						<h2 class="heading--black">RxJS</h2>
-						<p>
-							<img class="rxjs_logo" src="https://rxjs-dev.firebaseapp.com/generated/images/marketing/home/Rx_Logo-512-512.png" width="230">
-						</p>
-					</section>
-					<section>
-						<h3>RxJS</h3>
-						<p>RxJS is a library for reactive programming using <strong>Observables</strong>, to make it easier to compose asynchronous or callback-based code.</p>
-					</section>
-					<section>
-						<pre><code class="typescript" data-trim data-noescape>import { Observable, Subject, 
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <section>
+            <h2>Introduction to RxJs and NgRx</h1>          
+          </section>
+          <section>
+            <h3>Emanuelle Garduno <br>a.k.a Mani</h3>
+            <p>I built my first web application back in 2001, all with a Microsoft tech stack</p>
+            <ul>
+              <li>ASP (Active Server Pages)</li>
+              <li>IIS (Web Server)</li>
+              <li>Microsoft Access (DB)</li>
+              <li>Visual SourceSafe (SCM)</li>
+            </ul>
+          </section>
+        </section>
+        <section>
+          <section data-background-color="#dfdfdf">
+            <h2 class="heading--black">RxJS</h2>
+            <p>
+              <img class="rxjs_logo" src="https://rxjs-dev.firebaseapp.com/generated/images/marketing/home/Rx_Logo-512-512.png" width="230">
+            </p>
+          </section>
+          <section>
+            <h3>RxJS</h3>
+            <p>RxJS is a library for reactive programming using <strong>Observables</strong>, to make it easier to compose asynchronous or callback-based code.</p>
+          </section>
+          <section>
+            <h3>Observable</h3>
+            <p>In ReactiveX an observer subscribes to an Observable. Then that observer reacts to whatever item or sequence of items the Observable emits. This pattern facilitates concurrent operations because it does not need to block while waiting for the Observable to emit objects, but instead it creates a sentry in the form of an observer that stands ready to react appropriately at whatever future time the Observable does so.</p>           
+          </section>
+          <section>
+            <pre><code class="typescript" data-trim data-noescape>import { Observable, Subject, 
     ReplaySubject, from, of, range } from 'rxjs';
 import { map, filter, switchMap } from 'rxjs/operators';
 
 range(1, 200)
   .pipe(filter(x => x % 2 === 1), map(x => x + x))
   .subscribe(x => console.log(x));</code></pre>
-					</section>
-				</section>
-				<section>
-					<section data-background-color="#dfdfdf">
-						<h2 class="heading--black">Angular</h2>
-						<img src="https://angular.io/assets/images/logos/angular/angular.svg" width="250">
-					</section>
-					<section>
-						<h3>Event Emitter</h3>
-						<pre><code class="typescript" data-trim data-noescape>export class ZippyComponent {
+          </section>
+          <section>
+            <h3>Subject</h3>
+            <p>A Subject is a sort of bridge or proxy that is available in some implementations of ReactiveX that acts both as an observer and as an Observable. Because it is an observer, it can subscribe to one or more Observables, and because it is an Observable, it can pass through the items it observes by reemitting them, and it can also emit new items.</p>
+          </section>
+          <section>
+            <pre><code class="typescript">let subject = new Subject();
+let subscription = subject.subscribe(
+  (x) => console.log('onNext: ' + x),
+  (e) => console.log('onError: ' + e.message),
+  () => console.log('onCompleted'));
+
+subject.onNext(1); // => onNext: 1
+
+subject.onNext(2); // => onNext: 2
+
+subject.onCompleted(); // => onCompleted
+
+subscription.dispose();</code></pre>
+          </section>
+          <section>
+            <h3>Summary</h3>
+            <dl>
+              <dt>Observable.subscribe()</dt>
+              <dd>The observable subscribe method is used to subscribe to messages that are sent to an observable.</dd>
+              <dt>Subject.next()</dt>
+              <dd>The subject next method is used to send messages to an observable which are then sent to all subscribers of that observable.</dd>
+            </dl>
+          </section>
+        </section>
+        <section>
+          <section data-background-color="#dfdfdf">
+            <h2 class="heading--black">Observables in Angular</h2>
+            <img src="https://angular.io/assets/images/logos/angular/angular.svg" width="250">
+          </section>
+          <section>
+            <h3>Event Emitter</h3>
+            <pre><code class="typescript" data-trim data-noescape>export class ZippyComponent {
   visible = true;
   @Output() open = new EventEmitter<any>();
   @Output() close = new EventEmitter<any>();
@@ -126,10 +113,25 @@ range(1, 200)
     }
   }
 }</code></pre>
-					</section>
-					<section>
-						<h3>Async Pipe</h3>
-						<pre><code class="typescript" data-trim>@Component({
+          </section>
+          <section>
+            <h3>HTTP</h3>
+            <pre><code class="typescript" data-trim>//some service
+configUrl = 'assets/config.json';
+
+getConfig() {
+  return this.http.get&lt;Config&gt;(this.configUrl);
+}
+
+// some component
+showConfig() {
+  this.configService.getConfig()
+    .subscribe((data: Config) => this.config = { ...data });
+}</code></pre>
+          </section>
+          <section>
+            <h3>Async Pipe</h3>
+            <pre><code class="typescript" data-trim>@Component({
   selector: 'async-observable-pipe',
   template: `<div><code>observable|async</code>:
        Time: {{ time | async }}</div>`
@@ -139,10 +141,10 @@ export class AsyncObservablePipeComponent {
     setInterval(() => observer.next(new Date().toString()), 1000)
   );
 }</code></pre>
-					</section>
-					<section>
-						<h3>Router</h3>
-						<pre><code class="typescript" data-trim>export class Routable2Component implements OnInit {
+          </section>
+          <section>
+            <h3>Router</h3>
+            <pre><code class="typescript" data-trim>export class Routable2Component implements OnInit {
   constructor(private activatedRoute: ActivatedRoute) {}
  
   ngOnInit() {
@@ -150,10 +152,10 @@ export class AsyncObservablePipeComponent {
       .subscribe(url => console.log('The URL changed to: ' + url));
   }
 }</code></pre>
-					</section>
-					<section>
-						<h3>Forms</h3>
-						<pre><code class="typescript" data-trim>export class MyComponent implements OnInit {
+          </section>
+          <section>
+            <h3>Forms</h3>
+            <pre><code class="typescript" data-trim>export class MyComponent implements OnInit {
   nameChangeLog: string[] = [];
   heroForm: FormGroup;
  
@@ -168,62 +170,155 @@ export class AsyncObservablePipeComponent {
     );
   }
 }</code></pre>
-					</section>
-				</section>
-				<section>
-					<section data-background-color="#dfdfdf">
-						<h2 class="heading--black">Redux</h2>
-						<img src="https://seeklogo.com/images/R/redux-logo-9CA6836C12-seeklogo.com.png" width="220">
-					</section>
-					<section>
-						<h3>Redux</h3>
-						<p>Redux is a predictable state container for JavaScript apps.</p>
-						<p>Redux evolves the ideas of Flux, but avoids its complexity by taking cues from Elm.</p>
-					</section>
-					<section>
-						<h3>Three Principles</h3>
-						<dl>
-							<dt>Single source of truth</dt>
-							<dd>The state of your whole application is stored in an object tree within a single store.</dd>
+          </section>
+        </section>          
+        <section>
+          <section data-background-color="#dfdfdf">
+            <h2 class="heading--black">NgRx</h2>
+            <p>
+              <img src="https://avatars0.githubusercontent.com/u/16272733?s=250&v=4">
+            </p>
+          </section>
+          <section>
+            <h3>@ngrx - Reactive Extensions for Angular</h3>
+            <p>@ngrx provides a set of clean, well-tested libraries for reactive programming in Angular applications.</p>
+          </section>
+          <section>
+            <h3>@ngrx - Libraries</h3>
+            <dl class="dl--small">
+              <dt>Store</dt>
+              <dd>RxJS powered state management for Angular2 apps, inspired by Redux</dd>
 
-							<dt>State is read-only</dt>
-							<dd>The only way to change the state is to emit an action, an object describing what happened.</dd>
+              <dt>Effects</dt>
+              <dd>Side effect model for @ngrx/store</dd>
 
-							<dt>Changes are made with pure functions</dt>
-							<dd>To specify how the state tree is transformed by actions, you write pure reducers.</dd>
-						</dl>
-					</section>
-					<section>
-						<h3>Flux</h3>
-						<img src="https://facebook.github.io/flux/img/flux-simple-f8-diagram-explained-1300w.png">
-					</section>
-					<section>
-						<p>State</p>
-						<pre><code class="typescript">type State = any</code></pre>
-						<p>Action</p>
-						<pre><code class="typescript">type Action = { type: any, payload: any }</code></pre>
-						<p>Reducer</p>
-						<pre><code class="typescript">type Reducer&lt;S, A&gt; = (state: S, action: A) => S</code></pre>
-					</section>
-				</section>
-			</div>
-		</div>
+              <dt>DB</dt>
+              <dd>RxJS powered IndexedDB for Angular applications.</dd>
 
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.js"></script>
+              <dt>Notify</dt>
+              <dd>RxJS powered web notifications for Angular</dd>
 
-		<script>
-			// More info about config & dependencies:
-			// - https://github.com/hakimel/reveal.js#configuration
-			// - https://github.com/hakimel/reveal.js#dependencies
-			Reveal.initialize({
-				dependencies: [
-					{ src: 'plugin/markdown/marked.js' },
-					{ src: 'plugin/markdown/markdown.js' },
-					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
-				]
-			});
-		</script>
-	</body>
+              <dt>Store DevTools</dt>
+              <dd>Developer Tools for @ngrx</dd>
+
+              <dt>Store Log Monitor</dt>
+              <dd>Port of redux-devtools-log-monitor for Angular and @ngrx/store-devtools</dd>
+
+              <dt>Router Store</dt>
+              <dd>Bindings to connect @angular/router to @ngrx/store</dd>
+
+              <dt>Core</dt>
+              <dd>Core functionality for the @ngrx platform</dd>
+            </dl>
+          </section>
+          <section>
+            <pre><code class="typescript" data-trim data-noescape>@Injectable()
+export class CollectionEffects {
+  @Effect()
+  loadCollection$: Observable<Action> = this.actions$.pipe(
+    ofType(CollectionActionTypes.Load),
+    switchMap(() => this.db
+        .query('books')
+        .pipe(
+          toArray(),
+          map((books: Book[]) => new LoadSuccess(books)),
+          catchError(error => of(new LoadFail(error)))
+        )
+    )
+  );
+}</code></pre>
+          </section>
+          <section>
+            <h3>Side Effects</h3>
+            <p>In @ngrx/effects, effects are sources of actions. You use the <strong>@Effect()</strong> decorator to hint which observables on a service are action sources, and @ngrx/effects automatically merges your action streams letting you subscribe them to store.
+
+To help you compose new action sources, @ngrx/effects exports an Actions observable service that emits every action dispatched in your application.</p>
+          </section>          
+        </section>
+        <section>
+          <section data-background-color="#dfdfdf">
+            <h2 class="heading--black">Redux</h2>
+            <img src="https://seeklogo.com/images/R/redux-logo-9CA6836C12-seeklogo.com.png" width="220">
+          </section>
+          <section>
+            <h3>Redux</h3>
+            <p>Redux is a predictable state container for JavaScript apps.</p>
+            <p>Redux evolves the ideas of Flux, but avoids its complexity by taking cues from Elm.</p>
+          </section>
+          <section>
+            <h3>Three Principles</h3>
+            <dl>
+              <dt>Single source of truth</dt>
+              <dd>The state of your whole application is stored in an object tree within a single store.</dd>
+
+              <dt>State is read-only</dt>
+              <dd>The only way to change the state is to emit an action, an object describing what happened.</dd>
+
+              <dt>Changes are made with pure functions</dt>
+              <dd>To specify how the state tree is transformed by actions, you write pure reducers.</dd>
+            </dl>
+          </section>
+          <section>
+            <h3>Flux</h3>
+            <img src="https://facebook.github.io/flux/img/flux-simple-f8-diagram-explained-1300w.png">
+          </section>
+          <section>
+            <p>State</p>
+            <pre><code class="typescript">type State = any</code></pre>
+            <p>Action</p>
+            <pre><code class="typescript">type Action = { type: any, payload: any }</code></pre>
+            <p>Reducer</p>
+            <pre><code class="typescript">type Reducer&lt;S, A&gt; = (state: S, action: A) => S</code></pre>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>In summary</h3>
+            <ul>
+              <li>RxJS
+                <ul>
+                  <li>Observables</li>
+                  <li>Subjects</li>
+                  <li>Subscribers</li>
+                </ul>
+              </li>
+              <li>NgRx
+                <ul>
+                  <li>State</li>
+                  <li>Actions</li>
+                  <li>Reducers</li>
+                  <li>Side Effects</li>
+                </ul>
+              </li>
+            </ul>
+          </section>
+        </section>
+
+        <section data-background-iframe="https://stackblitz.com/edit/rvangular?embed=1&file=example-app/main.ts&view=preview" data-background-interactive>
+        </section>
+
+        <section data-background-color="#dfdfdf">
+          <h2 class="heading--black">Thank you!</h2>
+        </section>
+      </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+      // More info about config & dependencies:
+      // - https://github.com/hakimel/reveal.js#configuration
+      // - https://github.com/hakimel/reveal.js#dependencies
+      Reveal.initialize({
+        dependencies: [
+          { src: 'plugin/markdown/marked.js' },
+          { src: 'plugin/markdown/markdown.js' },
+          { src: 'plugin/notes/notes.js', async: true },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+        ]
+      });
+    </script>
+  </body>
 </html>
